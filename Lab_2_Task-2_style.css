@@ -1,0 +1,53 @@
+html{
+    font-size: 15px;
+}
+
+h1,h2{
+    color:green;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 1em;
+}
+
+h1{
+    font-size: 28px;
+}
+
+h2{
+    font-size: 1.25rem;
+}
+
+div p{
+    font-family:monospace;
+    font-size: 1.1em;
+    padding: 1m;
+}
+
+.note{
+    width: 80%;
+    margin: 2em auto;
+    border: 1px solid black;
+}
+
+input[type ="text"]{
+    width: 40%;
+    padding: 4px;
+}
+
+a:hover{
+    text-decoration:line-through;
+}
+
+input:focus{
+    outline: 2px solid blue;
+}
+
+button:active {
+    transform: scale(0.92);
+}
+
+body {
+    padding: 3vh 2vw;  
+}
+
+
+
