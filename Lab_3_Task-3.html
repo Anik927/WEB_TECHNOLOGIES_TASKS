@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 3 task 3</title>
+</head>
+<body>
+    <h1>Lab 3 Task 3</h1>
+
+<script>
+
+    var courses = ["Web Technologies", "Data Structures", "OOP", "Database", "Operating Systems"];
+
+    for (var i = 0; i < courses.length; i++) {
+    document.write((i + 1) + ". " + courses[i] + "<br>");
+    }
+
+    document.write("<br>");
+
+    courses.push("Computer Networks");
+    
+    for (var i = 0; i < courses.length; i++) {
+    document.write((i + 1) + ". " + courses[i] + "<br>");
+    }
+    document.write("<br>");
+
+    var arrayLength = courses.length;
+    document.write("Array Length: " + arrayLength + "<br><br>");
+
+    var removedCourse = courses.pop();
+
+    courses.unshift("Artificial Intelligence");
+
+    document.write("Updated Course List:<br>");
+
+    for (var i = 0; i < courses.length; i++) {
+    document.write((i + 1) + ". " + courses[i] + "<br>");
+    }
+
+    document.write("<br>");
+
+    var student = {
+    name: "Anik Rahman",
+    id: "23-12345-1",
+    department: "Computer Science",
+    cgpa: 3.75
+    };
+
+    document.write("Name: " + student.name + "<br>");
+    document.write("ID: " + student.id + "<br>");
+    document.write("Department: " + student.department + "<br>");
+    document.write("CGPA: " + student.cgpa + "<br><br>");
+
+    var students = [
+    {
+        name: "Anik Rahman",
+        id: "23-12345-1",
+        department: "Computer Science",
+        cgpa: 3.75
+    },
+    {
+        name: "Sara Ahmed",
+        id: "23-54321-2",
+        department: "Software Engineering",
+        cgpa: 3.60
+    },
+    {
+        name: "Rafiul Islam",
+        id: "23-67890-3",
+        department: "Computer Science",
+        cgpa: 3.85
+    }
+    ];
+
+    for (var i = 0; i < students.length; i++) {
+    document.write("<strong>Student " + (i + 1) + "</strong><br>");
+    document.write("Name: " + students[i].name + "<br>");
+    document.write("ID: " + students[i].id + "<br>");
+    document.write("Department: " + students[i].department + "<br>");
+    document.write("CGPA: " + students[i].cgpa + "<br><br>");
+    }
+
+</script>
+    
+</body>
+</html>

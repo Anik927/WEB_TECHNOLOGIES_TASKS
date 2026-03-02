@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Basics part 2</title>
+</head>
+<body>
+
+    <h1>JavaScript Practice - Part B</h1>
+
+<script>
+
+    function calculateSum(a, b) {
+     return a + b;
+}
+
+    var result = calculateSum(10, 20);
+    document.write("Sum of 10 and 20 is: " + result + "<br><br>");
+
+    for(var i = 1; i <= 10; i++) {
+        document.write(i + " ");
+    }
+
+    document.write("<br><br>");
+
+    var num = 2;
+
+    while (num <= 20) {
+    document.write(num + " ");
+    num += 2;
+    }
+
+    document.write("<br><br>");
+
+    var string = "Lab task of javascript"
+    var upperCaseString = string.toUpperCase();
+    var length = string.length;
+    var firstWord = string.split(" ")[0];
+
+    document.write("String: " + string + "<br>");
+    document.write("Uppercase: " + upperCaseString + "<br>");
+    document.write("Length: " + length + "<br>");
+    document.write("First Word: " + firstWord + "<br><br>");
+
+    function checkStringLength(str) {
+    if (str.length > 5) {
+        return "Long String";
+    } else {
+        return "Short String";
+    }
+}
+
+    var userInput = prompt("Enter a string:");
+
+    var result = checkStringLength(userInput);
+    document.write("The string is: " + result);
+
+</script>
+    
+</body>
+</html>

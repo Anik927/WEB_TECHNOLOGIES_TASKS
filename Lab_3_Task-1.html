@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Basics</title>
+</head>
+<body>
+    <h1>JavaScript Practice - Part A</h1>
+
+<script>
+    alert("JavaScript first try");
+    console.log("console log first try");
+    document.write("document write first try<br>");
+    
+    
+    var name = "Anik";
+    var age = 23;
+    var nextYearAge = age + 1;
+
+    var message = "Student Name: " + name + "<br>Current Age: " + age + 
+    "<br>Next Year Age: " + nextYearAge;
+
+    document.write(message+"<br>");
+
+    var num1 = prompt("Enter first number:");
+    var num2 = prompt("Enter second number:");
+
+    num1 = Number(num1);
+    num2 = Number(num2);
+
+    var sum = num1 + num2;
+    var difference = num1 - num2;
+    var product = num1 * num2;
+
+    document.write("Sum: " + sum + "<br>");
+    document.write("Difference: " + difference + "<br>");
+    document.write("Product: " + product + "<br>");
+    
+    if (num1 % 2 === 0) {
+        document.write("<h3>" + num1 + " is Even</h3>");
+    } else {
+        document.write("<h3>" + num1 + " is Odd</h3>");
+    }
+
+</script>
+</body>
+</html>
