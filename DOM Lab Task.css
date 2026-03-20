@@ -1,0 +1,13 @@
+.delete-btn {
+  margin-left: 10px;
+}
+
+.highlight {
+    background-color: yellow;
+    border: 2px solid blue;
+}
+
+.highlight-btn {
+  display: block; /* forces button on its own line */
+  margin-bottom: 17px; /* adds some spacing */
+}

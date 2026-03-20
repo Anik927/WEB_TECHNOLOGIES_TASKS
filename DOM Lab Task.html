@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Lab Task</title>
+    <link rel="stylesheet" href="DOM Lab Task.css">
+</head>
+<body>
+    
+    <form id="student-form">
+        <label for = "student-name">Name:</label>
+        <input type="text"  id="student-name" placeholder="Enter your name"> 
+
+        <br><br>
+        
+        <label for="student-roll">Roll no: </label>
+        <input type="text" id="student-roll" placeholder="Enter your roll number">
+        
+        <br><br>
+
+        <button type="submit" id="add-btn" disabled>Add Student</button>
+    </form>
+
+    <br>
+
+    <button id="sort-btn">Sort A-Z</button>
+
+    <br><br>
+
+    <input type="text" id="search-box" placeholder="Search student">
+
+    <ul id="student-list"></ul>
+
+    <p id="attendance-count">Present: 0, Absent: 0</p>
+
+    <p id="student-count">Total students: 0</p>    
+
+    <script src="DOM Lab Task.js"></script>
+
+</body>
+</html>
