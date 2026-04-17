@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Booking</title>
+    <link rel="stylesheet" href="course-booking.css" />
+</head>
+<body>
+    <header>Course Booking</header>
+
+    <main>
+    <div class="panels">
+    
+      <fieldset>
+        
+        <legend>Course Enrollment Panel</legend>
+        <p><strong>Course:</strong> JavaScript Basics</p>
+        <p><strong>Fee per Seat:</strong> 500 Tk</p>
+
+         <label for="seats">Number of Seats:</label>
+        <input type="number" id="seats" value="1" min="1" />
+
+        <p id="error-msg" style="color: red; display: none;">
+            ⚠️ Seats cannot be zero or negative! Resetting to 1.
+        </p>
+
+        <p>Total Course Fee: <strong id="total-fee">500 Tk</strong></p>
+
+        <p id="discount-msg" style="color: green; display: none;">
+            🎉 You are eligible for a special discount!
+        </p>
+
+      </fieldset>
+      
+      <fieldset>
+       
+        <legend>Enrollment Details Form</legend>
+        <label for="full-name">Full Name:</label>
+        <input type="text" id="full-name" placeholder="Enter your full name" />
+
+        <label for="email">Contact Email:</label>
+        <input type="email" id="email" placeholder="Enter your email" />
+
+        <label for="class-type">Class Type:</label>
+        <select id="class-type">
+            <option value="online">Online Class</option>
+            <option value="oncampus">On-Campus Class</option>
+        </select>
+
+        <p>Extra Fee: <strong id="extra-fee">100 Tk</strong></p>
+        <p>Final Payable Amount: <strong id="final-amount">600 Tk</strong></p>
+        
+        <input type="checkbox" id="confirm-checkbox" />   <br>     
+        <label>
+            I confirm my enrollment details are correct
+        </label>
+
+        <br>
+        <button id="submit-btn" style="display: none;">Submit Enrollment</button>
+
+      </fieldset>
+
+    </div>
+  </main>
+
+  
+  <footer>
+    <p>All Rights Sold 2026</p>
+  </footer>
+
+  <script src="course-booking.js"></script>
+
+</body>
+</html>
