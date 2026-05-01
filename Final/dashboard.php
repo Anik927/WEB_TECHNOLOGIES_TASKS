@@ -62,23 +62,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'N/A';
     <p><strong>Username:</strong> <?php echo htmlspecialchars($username); ?></p>
     <p><strong>User ID:</strong> <?php echo htmlspecialchars($user_id); ?></p>
     <p><strong>Login Time:</strong> <?php echo htmlspecialchars($login_time); ?></p>
-    <p><strong>Session ID:</strong> <?php echo session_id(); ?></p>
 
-    <h3>How PHP Sessions Work:</h3>
-    <ul>
-        <li>Session Created: When you logged in, session_start() created a session</li>
-        <li>Data Stored: Your username was stored in $_SESSION on the server</li>
-        <li>Cookie Set: A PHPSESSID cookie was sent to your browser</li>
-        <li>State Maintained: Every page uses the same session ID</li>
-        <li>Access Control: Pages check if you're logged in</li>
-        <li>Logout Destroys: session_destroy() removes session data</li>
-    </ul>
-
-    <pre>
-// On this page:
-session_start(); // Resumes session using PHPSESSID cookie
-echo $_SESSION['username']; // Retrieves stored data
-    </pre>
 
     <p>
         <button onclick="location.reload()">Refresh Page</button>

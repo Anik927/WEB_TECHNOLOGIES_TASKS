@@ -1,7 +1,3 @@
-<?php
-// login.php - Login Page for Session Demonstration
-// This page displays a login form where users can enter their credentials
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,12 +55,10 @@
 
         <button type="submit">Login</button>
     </form>
-
-    <h3>Demo Credentials:</h3>
+    
     <p>
-        Username: <strong>admin</strong><br>
-        Password: <strong>password123</strong><br><br>
-        (For demonstration purposes - sessions store this login state)
+        Username: <strong>Anik</strong><br>
+        Password: <strong>password123</strong><br><br>        
     </p>
 </body>
 </html>
