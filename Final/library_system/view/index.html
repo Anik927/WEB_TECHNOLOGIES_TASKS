@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>University Library System</title>
+
+    <style>
+        /* Basic reset — remove default browser spacing */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 5px; }
+        p.sub { text-align: center; color: #777; margin-bottom: 25px; font-size: 13px; }
+
+        /* White card boxes */
+        .card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 16px;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* Form layout */
+        .row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .field label { font-size: 13px; font-weight: bold; margin-bottom: 4px; }
+
+        .field input, .field select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        /* Buttons */
+        button { padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; }
+        .btn-blue   { background: #3498db; color: #fff; }
+        .btn-orange { background: #f39c12; color: #fff; }
+        .btn-red    { background: #e74c3c; color: #fff; }
+        .btn-grey   { background: #95a5a6; color: #fff; }
+
+        /* Message box */
+        #msg {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: none;
+            font-size: 14px;
+        }
+        #msg.ok  { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; display: block; }
+        #msg.err { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; display: block; }
+
+        /* Table */
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        thead { background: #2c3e50; color: #fff; }
+        th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        tbody tr:hover { background: #f9f9f9; }
+
+        /* Status badges */
+        .badge { padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+        .avail { background: #d4edda; color: #155724; }
+        .borrow { background: #fff3cd; color: #856404; }
+    </style>
+</head>
+<body>
+
+<h1>📚 University Library System</h1>
+<p class="sub">Add, view, edit, and delete books — no page refresh needed (AJAX)</p>
+
+<!-- Message box: shown after every AJAX action -->
+<div id="msg"></div>
+
+<!-- ==================== FORM CARD ==================== -->
+<div class="card">
+    <!-- This heading changes to "Edit Book" when editing -->
+    <h2 id="formTitle">Add New Book</h2>
+
+    <!-- Hidden field: stores the book ID when editing (empty when adding) -->
+    <input type="hidden" id="bookId">
+
+    <div class="row">
+        <div class="field">
+            <label>Book Title *</label>
+            <input type="text" id="title" placeholder="e.g. Introduction to PHP">
+        </div>
+        <div class="field">
+            <label>Author Name *</label>
+            <input type="text" id="author" placeholder="e.g. Rasmus Lerdorf">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="field">
+            <label>Category *</label>
+            <input type="text" id="category" placeholder="e.g. Computer Science">
+        </div>
+        <div class="field">
+            <label>Status</label>
+            <select id="status">
+                <option value="Available">Available</option>
+                <option value="Borrowed">Borrowed</option>
+            </select>
+        </div>
+    </div>
+
+    <div style="display:flex; gap:10px;">
+        <button class="btn-blue" onclick="saveBook()">💾 Save Book</button>
+        <button class="btn-grey" onclick="resetForm()">✖ Cancel</button>
+    </div>
+</div>
+
+<!-- ==================== TABLE CARD ==================== -->
+<div class="card">
+    <h2>📋 All Books</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- JavaScript fills this in -->
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+const CTRL = "controller/BookController.php";
+
+
+function loadBooks() {
+    fetch(CTRL + "?action=getAll")
+        .then(res => res.json())   // Parse the JSON the server sends back
+        .then(data => {
+            const tbody = document.getElementById("tableBody");
+
+            if (!data.success || data.data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#888">No books found.</td></tr>';
+                return;
+            }
+
+            // Build one <tr> for each book
+            let html = "";
+            data.data.forEach((book, i) => {
+                const badge = book.status === "Available"
+                    ? '<span class="badge avail">Available</span>'
+                    : '<span class="badge borrow">Borrowed</span>';
+
+                html += `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${book.title}</td>
+                        <td>${book.author}</td>
+                        <td>${book.category}</td>
+                        <td>${badge}</td>
+                        <td>
+                            <button class="btn-orange" onclick="editBook(${book.id})">✏️ Edit</button>
+                            &nbsp;
+                            <button class="btn-red" onclick="deleteBook(${book.id}, '${book.title}')">🗑️ Delete</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html;
+        });
+}
+
+
+function saveBook() {
+    const id       = document.getElementById("bookId").value;
+    const title    = document.getElementById("title").value.trim();
+    const author   = document.getElementById("author").value.trim();
+    const category = document.getElementById("category").value.trim();
+    const status   = document.getElementById("status").value;
+
+    // Client-side check before even sending to server
+    if (!title || !author || !category) {
+        showMsg("Please fill in all required fields.", "err");
+        return;
+    }
+
+    // FormData lets us build key-value pairs to send via POST
+    const fd = new FormData();
+    fd.append("title",    title);
+    fd.append("author",   author);
+    fd.append("category", category);
+    fd.append("status",   status);
+
+    // If bookId has a value, we're editing an existing book
+    if (id) {
+        fd.append("action", "update");
+        fd.append("id",     id);
+    } else {
+        fd.append("action", "add");
+    }
+
+    // Send POST request
+    fetch(CTRL, { method: "POST", body: fd })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                showMsg(data.message, "ok");
+                resetForm();   // Clear the form
+                loadBooks();   // Refresh the table
+            } else {
+                showMsg(data.message, "err");
+            }
+        });
+}
+
+
+function editBook(id) {
+    fetch(CTRL + "?action=getOne&id=" + id)
+        .then(res => res.json())
+        .then(data => {
+            if (!data.success) {
+                showMsg(data.message, "err");
+                return;
+            }
+
+            const b = data.data;
+
+            // Fill each form field with the book's current data
+            document.getElementById("bookId").value   = b.id;
+            document.getElementById("title").value    = b.title;
+            document.getElementById("author").value   = b.author;
+            document.getElementById("category").value = b.category;
+            document.getElementById("status").value   = b.status;
+
+            // Change the heading so the user knows they are editing
+            document.getElementById("formTitle").textContent = "✏️ Editing: " + b.title;
+
+            // Scroll to the top so they can see the form
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+}
+
+
+function deleteBook(id, title) {
+    // confirm() shows a popup. If user clicks Cancel, we stop.
+    if (!confirm('Delete "' + title + '"?')) return;
+
+    const fd = new FormData();
+    fd.append("action", "delete");
+    fd.append("id",     id);
+
+    fetch(CTRL, { method: "POST", body: fd })
+        .then(res => res.json())
+        .then(data => {
+            showMsg(data.message, data.success ? "ok" : "err");
+            if (data.success) loadBooks(); // Refresh table only if deleted
+        });
+}
+
+
+function resetForm() {
+    document.getElementById("bookId").value    = "";
+    document.getElementById("title").value     = "";
+    document.getElementById("author").value    = "";
+    document.getElementById("category").value  = "";
+    document.getElementById("status").value    = "Available";
+    document.getElementById("formTitle").textContent = "Add New Book";
+}
+
+
+function showMsg(text, type) {
+    const el = document.getElementById("msg");
+    el.textContent = text;
+    el.className   = type; // "ok" or "err" — matches our CSS classes
+
+    // Auto-hide the message after 4 seconds
+    setTimeout(() => { el.className = ""; el.style.display = "none"; }, 4000);
+}
+
+
+// Load the books table as soon as the page finishes loading
+document.addEventListener("DOMContentLoaded", loadBooks);
+</script>
+
+</body>
+</html>
